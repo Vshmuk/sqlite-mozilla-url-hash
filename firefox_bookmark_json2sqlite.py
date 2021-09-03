@@ -7,6 +7,9 @@ from urllib.parse import urlparse
 import sqlite3
 from sqlite3 import Error
 
+SYNC_STATUS_UNKNOWN = 0
+SYNC_STATUS_NEW = 1
+SYNC_STATUS_NORMAL = 2
 
 def create_connection(db_file):
     conn = None
@@ -72,13 +75,13 @@ with open(parsed_args.in_file, "r") as read_file:
                 INSERT INTO moz_bookmarks(id,type,fk,parent,title,dateAdded,lastModified,guid,syncStatus)
               VALUES(?,?,?,?,?,?,?,?,?)
               '''
-            cur.execute(query, (item["id"],"1",rowid,item["parent"],item["title"],item["dateAdded"],item["lastModified"],item["guid"],1)) 
+            cur.execute(query, (item["id"],"1",rowid,item["parent"],item["title"],item["dateAdded"],item["lastModified"],item["guid"],SYNC_STATUS_NEW))
             
         if item['type'] == "text/x-moz-place-container":
             query = '''
                 INSERT INTO moz_bookmarks(id,type,parent,title,dateAdded,lastModified,guid,syncStatus)
               VALUES(?,?,?,?,?,?,?,?)
               '''
-            cur.execute(query, (item["id"],"2",item["parent"],item["title"],item["dateAdded"],item["lastModified"],item["guid"],1)) 
+            cur.execute(query, (item["id"],"2",item["parent"],item["title"],item["dateAdded"],item["lastModified"],item["guid"],SYNC_STATUS_NEW))
             
         conn.commit()
