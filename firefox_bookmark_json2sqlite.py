@@ -116,7 +116,7 @@ def add_place(item):
 def add_tags(item, place_id):
     if not("tags" in item):
         return
-    tags = item["tags"].split(",")
+    tags = set(item["tags"].split(","))
     for idx, one_tag in enumerate(tags):
         tag_text_id = add_tag_text(item, one_tag, idx)
         add_tag_link(item, place_id, tag_text_id, idx)
