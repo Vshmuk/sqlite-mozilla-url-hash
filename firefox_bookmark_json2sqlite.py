@@ -14,6 +14,7 @@ def create_connection(db_file):
         conn = sqlite3.connect(db_file)
     except Error as e:
         print(e)
+    conn.enable_load_extension(True)
     conn.load_extension("./sqlite-mozilla-url-hash")
     return conn
 
