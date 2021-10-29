@@ -1,0 +1,2 @@
+# Ignore the copied Mozilla URL hash library
+/sqlite-mozilla-url-hash.so
